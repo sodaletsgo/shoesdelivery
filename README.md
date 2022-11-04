@@ -1,5 +1,4 @@
-![image](https://user-images.githubusercontent.com/487999/79708354-29074a80-82fa-11ea-80df-0db3962fb453.png)
-![2015052623062434](https://user-images.githubusercontent.com/113114425/199884052-06067f82-f676-4a44-a192-a495061e4962.jpg)
+![shoesmoa](https://user-images.githubusercontent.com/113114425/199918131-e65b6c98-44ec-4d1d-a4cd-b9ffe30c0de2.jpg)
 
 <2022 삼성SDS 클라우드 네이티브 아키텍트 양성과정 7차 - Capstone Project 4팀>
  - 팀원: 최천석(팀장), 박찬우, 강소연, 김현우, 정상묵
