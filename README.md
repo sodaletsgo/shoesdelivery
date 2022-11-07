@@ -452,27 +452,7 @@ public class PolicyHandler{
 }
 
 ```
-실제 구현을 하자면, 카톡 등으로 슈즈모아 업체는 노티를 받고, 포장를 마친후, 주문 상태를 UI에 입력할테니, 우선 주문정보를 DB에 받아놓은 후, 이후 처리는 해당 Aggregate 내에서 하면 되겠다.:
-  
-```
-  @Autowired OrdermanagementRepository ordermanagementRepository;
-  
-  @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='PaymentApproved'")
-  public void wheneverPaymentApproved_ReceiveOrderinformation(@Payload PaymentApproved paymentApproved){
 
-      if(paymentApproved.isMe()){
-
-          PaymentApproved event = paymentApproved;
-          System.out.println("\n\n##### listener ReceiveOrderinformation : " + paymentApproved + "\n\n");
-
-          Ordermanagement ordermanagement = new Ordermanagement();
-          ordermanagement.setOrderId(Long.valueOf(paymentApproved.getOrderId()));
-          ordermanagementRepository.save(ordermanagement);
-          // Sample Logic //
-          //Ordermanagement.receiveOrderinformation(event);          
-      }
-  }
-```
 
 슈즈모아 관리시스템은 주문/결제와 완전히 분리되어있으며, 이벤트 수신에 따라 처리되기 때문에, 슈즈모아 관리시스템이 유지보수로 인해 잠시 내려간 상태라도 주문을 받는데 문제가 없다:
 ```
