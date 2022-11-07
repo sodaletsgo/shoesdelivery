@@ -10,10 +10,54 @@ import lombok.*;
 public class PaymentApproved extends AbstractEvent {
 
     private Long id;
-    private String orderId;
+    //private String orderId;
+    private Long orderId;
     private Long price;
     private String kakaopayId;
     private Date createDate;
+
+    public Long getId(){
+        return id;
+    }
+    public void setId(Long id){
+        this.id=id;
+    }
+
+    /*
+    public String getOrderId(){
+        return orderId;
+    }
+    public void setOrderId(String orderId){
+        this.orderId=orderId;
+    }
+    */
+    public Long getOrderId(){
+        return orderId;
+    }
+    public void setOrderId(Long orderId){
+        this.orderId=orderId;
+    }
+
+    public Long getPrice(){
+        return price;
+    }
+    public void setPrice(Long price){
+        this.price=price;
+    }
+
+    public String getKakaopayId(){
+        return kakaopayId;
+    }
+    public void setKakaopayId(String kakaopayId){
+        this.kakaopayId=kakaopayId;
+    }
+
+    public Date getCreateDate(){
+        return createDate;
+    }
+    public void setCreateDate(Date createDate){
+        this.createDate=createDate;
+    }
 
     public PaymentApproved(PaymentHistory aggregate){
         super(aggregate);
