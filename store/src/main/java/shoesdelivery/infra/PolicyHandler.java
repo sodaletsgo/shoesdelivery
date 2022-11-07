@@ -26,16 +26,19 @@ public class PolicyHandler{
     @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='PaymentApproved'")
     public void wheneverPaymentApproved_ReceiveOrderinformation(@Payload PaymentApproved paymentApproved){
 
-        PaymentApproved event = paymentApproved;
-        System.out.println("\n\n##### listener ReceiveOrderinformation : " + paymentApproved + "\n\n");
+        //if(paymentApproved.isMe()){
 
+            PaymentApproved event = paymentApproved;
+            System.out.println("\n\n##### listener ReceiveOrderinformation : " + paymentApproved + "\n\n");
 
-        
+            Ordermanagement ordermanagement = new Ordermanagement();
+            ordermanagement.setOrderId(Long.valueOf(paymentApproved.getOrderId()));
+            ordermanagementRepository.save(ordermanagement);
 
-        // Sample Logic //
-        Ordermanagement.receiveOrderinformation(event);
-        
-
+            // Sample Logic //
+            //Ordermanagement.receiveOrderinformation(event);
+            
+        //}
         
 
     }
@@ -43,16 +46,19 @@ public class PolicyHandler{
     @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='PaymentCancelled'")
     public void wheneverPaymentCancelled_CancelOrder(@Payload PaymentCancelled paymentCancelled){
 
-        PaymentCancelled event = paymentCancelled;
-        System.out.println("\n\n##### listener CancelOrder : " + paymentCancelled + "\n\n");
+        //if(paymentCancelled.isMe()){
+            PaymentCancelled event = paymentCancelled;
+            System.out.println("\n\n##### listener CancelOrder : " + paymentCancelled + "\n\n");
 
+            ordermanagementRepository.findById(paymentCancelled.getOrderId()).ifPresent(ordermanagement ->{
+                ordermanagementRepository.delete(ordermanagement);
+            });
+            
 
-        
-
-        // Sample Logic //
-        Ordermanagement.cancelOrder(event);
-        
-
+            // Sample Logic //
+            //Ordermanagement.cancelOrder(event);
+            
+        //}
         
 
     }
