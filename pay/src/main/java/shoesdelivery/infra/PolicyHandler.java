@@ -37,11 +37,6 @@ public class PolicyHandler{
             // Sample Logic //
             //PaymentHistory.cancelApproval(event);
         }
-
-        
-
     }
 
 }
-
-
