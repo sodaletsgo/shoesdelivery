@@ -525,7 +525,7 @@ hystrix:
   command:
     # 전역설정
     default:
-      execution.isolation.thread.timeoutInMilliseconds: 610
+      execution.isolation.thread.timeoutInMilliseconds: 480
 
 ```
 
@@ -551,7 +551,7 @@ hystrix:
 - 60초 동안 실시
 
 ```
-$ siege -c100 -t60S -r10 --content-type "application/json" 'http://localhost:8081/orders POST {"item": "운동화"}'
+$ siege -c100 -t60S -r10 -v --content-type "application/json" 'http://localhost:8081/orders POST {"item": "운동화"}'
 
 ** SIEGE 4.0.5
 ** Preparing 100 concurrent users for battle.
@@ -696,7 +696,7 @@ kubectl autoscale deploy pay --min=1 --max=10 --cpu-percent=15
 ```
 - CB 에서 했던 방식대로 워크로드를 2분 동안 걸어준다.
 ```
-siege -c100 -t120S -r10 --content-type "application/json" 'http://localhost:8081/orders POST {"item": "운동화"}'
+siege -c100 -t120S -r10 -v --content-type "application/json" 'http://localhost:8081/orders POST {"item": "운동화"}'
 ```
 - 오토스케일이 어떻게 되고 있는지 모니터링을 걸어둔다:
 ```
@@ -729,7 +729,7 @@ Concurrency:		       96.02
 
 - seige 로 배포작업 직전에 워크로드를 모니터링 함.
 ```
-siege -c100 -t120S -r10 --content-type "application/json" 'http://localhost:8081/orders POST {"item": "운동화"}'
+siege -c100 -t120S -r10 -v --content-type "application/json" 'http://localhost:8081/orders POST {"item": "운동화"}'
 
 ** SIEGE 4.0.5
 ** Preparing 100 concurrent users for battle.
