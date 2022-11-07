@@ -25,23 +25,28 @@ public class PolicyHandler{
 
     @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='ShippingStarted'")
     public void wheneverShippingStarted_ChangeOrderstatus(@Payload ShippingStarted shippingStarted){
+        System.out.println("생성됨?");
+        if(shippingStarted.isMe() && shippingStarted.getOrderId() != null){
+            System.out.println("응!");
 
-        //if(shippingStarted.isMe() && shippingStarted.getOrderId() != null){
-        if(shippingStarted.getOrderId() != null){
+            if(shippingStarted.getOrderId() != null){
 
-            ShippingStarted event = shippingStarted;
-            System.out.println("\n\n##### listener ChangeOrderstatus : " + shippingStarted + "\n\n");
+                ShippingStarted event = shippingStarted;
+                System.out.println("\n\n##### listener ChangeOrderstatus : " + shippingStarted + "\n\n");
 
-            orderRepository.findById(Long.valueOf(shippingStarted.getOrderId())).ifPresent((order)->{
-                order.setStatus("배달시작됨");
-                orderRepository.save(order);
-            });
+                orderRepository.findById(Long.valueOf(shippingStarted.getOrderId())).ifPresent((order)->{
+                    order.setStatus("배달시작됨");
+                    orderRepository.save(order);
+                });
 
-            // Sample Logic //
-            //Order.changeOrderstatus(event);
-            
+                // Sample Logic //
+                //Order.changeOrderstatus(event);
+                
+            }
+
+        }else{
+            System.out.println("아니!");
         }
-        
 
     }
 

@@ -83,4 +83,8 @@ public class AbstractEvent {
     public boolean validate(){
         return getEventType().equals(getClass().getSimpleName());
     }
+
+    public boolean isMe(){
+        return getEventType().equals(getClass().getSimpleName());
+    }    
 }

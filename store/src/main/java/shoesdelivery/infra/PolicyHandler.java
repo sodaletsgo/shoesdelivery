@@ -26,7 +26,7 @@ public class PolicyHandler{
     @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='PaymentApproved'")
     public void wheneverPaymentApproved_ReceiveOrderinformation(@Payload PaymentApproved paymentApproved){
 
-        //if(paymentApproved.isMe()){
+        if(paymentApproved.isMe()){
 
             PaymentApproved event = paymentApproved;
             System.out.println("\n\n##### listener ReceiveOrderinformation : " + paymentApproved + "\n\n");
@@ -38,7 +38,7 @@ public class PolicyHandler{
             // Sample Logic //
             //Ordermanagement.receiveOrderinformation(event);
             
-        //}
+        }
         
 
     }
@@ -46,7 +46,7 @@ public class PolicyHandler{
     @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='PaymentCancelled'")
     public void wheneverPaymentCancelled_CancelOrder(@Payload PaymentCancelled paymentCancelled){
 
-        //if(paymentCancelled.isMe()){
+        if(paymentCancelled.isMe()){
             PaymentCancelled event = paymentCancelled;
             System.out.println("\n\n##### listener CancelOrder : " + paymentCancelled + "\n\n");
 
@@ -58,7 +58,7 @@ public class PolicyHandler{
             // Sample Logic //
             //Ordermanagement.cancelOrder(event);
             
-        //}
+        }
         
 
     }
