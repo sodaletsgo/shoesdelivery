@@ -91,7 +91,9 @@ public class PaymentHistory  {
             });
 
             try {
-                Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+                long needSleep = 400 + (long)(Math.random() * 220);
+                System.out.println("needSleep:" + needSleep);
+                Thread.currentThread().sleep((long) (needSleep));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
