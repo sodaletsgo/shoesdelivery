@@ -375,10 +375,10 @@ public interface PaymentHistoryService {
 #주문처리
 http localhost:8081/orders item="러닝화" colorCode="black" size="270" quantity=1 price=12000   #Fail
 http localhost:8081/orders item="운동화" colorCode="black" size="230" quantity=1 price=15000   #Fail
-
+```
 ![image](https://user-images.githubusercontent.com/112833706/200236849-02d40cda-eaf0-493b-9364-bc9f1b71b309.png)
 
-
+```
 #결제서비스 재기동
 cd 결제
 mvn spring-boot:run
@@ -386,11 +386,9 @@ mvn spring-boot:run
 #주문처리
 http localhost:8081/orders item="러닝화" colorCode="black" size="270" quantity=1 price=12000   #Success
 http localhost:8081/orders item="운동화" colorCode="black" size="230" quantity=1 price=15000   #Success
-
+```
 ![image](https://user-images.githubusercontent.com/112833706/200236885-7a54b271-051d-49a5-817d-7b68bbcceffc.png)
 
-
-```
 
 - 또한 과도한 요청시에 서비스 장애가 도미노 처럼 벌어질 수 있다. (서킷브레이커, 폴백 처리는 운영단계에서 설명한다.)
 
