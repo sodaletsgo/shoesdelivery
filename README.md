@@ -481,7 +481,10 @@ public class PolicyHandler{
 #주문처리
 http localhost:8081/orders item="러닝화" colorCode="black" size="270" quantity=1 price=12000   #Success
 http localhost:8081/orders item="운동화" colorCode="black" size="230" quantity=1 price=15000   #Success
+```
+![image](https://user-images.githubusercontent.com/112833706/200237557-de575675-35e3-4e64-90cd-e970efa92393.png)
 
+```
 #주문상태 확인
 http localhost:8080/orders     # 주문상태 안바뀜 확인
 
@@ -492,6 +495,7 @@ mvn spring-boot:run
 #주문상태 확인
 http localhost:8080/orders     # 모든 주문의 상태가 "배송됨"으로 확인
 ```
+![image](https://user-images.githubusercontent.com/112833706/200237591-c1ea33ff-e98a-424c-8b15-de0ae73be811.png)
 
 
 # 운영
