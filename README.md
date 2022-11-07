@@ -462,7 +462,8 @@ public class PolicyHandler{
 http localhost:8081/orders item="러닝화" colorCode="black" size="270" quantity=1 price=12000   #Success
 http localhost:8081/orders item="운동화" colorCode="black" size="230" quantity=1 price=15000   #Success
 ```
-![image](https://user-images.githubusercontent.com/112833706/200237557-de575675-35e3-4e64-90cd-e970efa92393.png)
+![image](https://user-images.githubusercontent.com/112833706/200242883-fb18b68e-4511-4f0d-925e-e32adc029f96.png)
+
 
 ```
 #주문상태 확인
