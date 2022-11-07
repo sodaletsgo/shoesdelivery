@@ -8,7 +8,7 @@
  <슈즈모아 소개가 들어갈 자리!!>
 
 [DDD]
-  https://www.msaez.io/#/storming/s1fjCA5xjJOde8YQKGyloSvE8bW2/cd98aed948b45f4c8957ec8882163e1a
+  https://labs.msaez.io/#/storming/s1fjCA5xjJOde8YQKGyloSvE8bW2/58cba37def25dca06817edf14257531f
 
 
 # Table of contents
@@ -117,82 +117,22 @@
 
 
 ## AS-IS 조직 (Horizontally-Aligned)
+
   ![image](https://user-images.githubusercontent.com/487999/79684144-2a893200-826a-11ea-9a01-79927d3a0107.png)
 
 ## TO-BE 조직 (Vertically-Aligned)
   ![image](https://user-images.githubusercontent.com/487999/79684159-3543c700-826a-11ea-8d5f-a3fc0c4cad87.png)
 
 
-## Event Storming 결과
-* MSAEz 로 모델링한 이벤트스토밍 결과:  http://msaez.io/#/storming/nZJ2QhwVc4NlVJPbtTkZ8x9jclF2/every/a77281d704710b0c2e6a823b6e6d973a/-M5AV2z--su_i4BfQfeF
-
-
-### 이벤트 도출
-![image](https://user-images.githubusercontent.com/487999/79683604-47bc0180-8266-11ea-9212-7e88c9bf9911.png)
-
-### 부적격 이벤트 탈락
-![image](https://user-images.githubusercontent.com/487999/79683612-4b4f8880-8266-11ea-9519-7e084524a462.png)
-
-    - 과정중 도출된 잘못된 도메인 이벤트들을 걸러내는 작업을 수행함
-        - 주문시>메뉴카테고리선택됨, 주문시>메뉴검색됨 :  UI 의 이벤트이지, 업무적인 의미의 이벤트가 아니라서 제외
-
-### 액터, 커맨드 부착하여 읽기 좋게
-![image](https://user-images.githubusercontent.com/487999/79683614-4ee30f80-8266-11ea-9a50-68cdff2dcc46.png)
-
-### 어그리게잇으로 묶기
-![image](https://user-images.githubusercontent.com/487999/79683618-52769680-8266-11ea-9c21-48d6812444ba.png)
-
-    - app의 Order, store 의 주문처리, 결제의 결제이력은 그와 연결된 command 와 event 들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌
-
-### 바운디드 컨텍스트로 묶기
-
-![image](https://user-images.githubusercontent.com/487999/79683625-560a1d80-8266-11ea-9790-40d68a36d95d.png)
-
-    - 도메인 서열 분리 
-        - Core Domain:  app(front), store : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 app 의 경우 1주일 1회 미만, store 의 경우 1개월 1회 미만
-        - Supporting Domain:   marketing, customer : 경쟁력을 내기위한 서비스이며, SLA 수준은 연간 60% 이상 uptime 목표, 배포주기는 각 팀의 자율이나 표준 스프린트 주기가 1주일 이므로 1주일 1회 이상을 기준으로 함.
-        - General Domain:   pay : 결제서비스로 3rd Party 외부 서비스를 사용하는 것이 경쟁력이 높음 (핑크색으로 이후 전환할 예정)
-
-### 폴리시 부착 (괄호는 수행주체, 폴리시 부착을 둘째단계에서 해놔도 상관 없음. 전체 연계가 초기에 드러남)
-
-![image](https://user-images.githubusercontent.com/487999/79683633-5aced180-8266-11ea-8f42-c769eb88dfb1.png)
-
-### 폴리시의 이동과 컨텍스트 매핑 (점선은 Pub/Sub, 실선은 Req/Resp)
-
-![image](https://user-images.githubusercontent.com/487999/79683641-5f938580-8266-11ea-9fdb-4e80ff6642fe.png)
-
 ### 완성된 1차 모형
 
-![image](https://user-images.githubusercontent.com/487999/79683646-63bfa300-8266-11ea-9bc5-c0b650507ac8.png)
+![image](https://user-images.githubusercontent.com/112833706/200234485-09f546a2-f936-4d7f-8e4b-576ad5a06454.png)
 
     - View Model 추가
 
-### 1차 완성본에 대한 기능적/비기능적 요구사항을 커버하는지 검증
-
-![image](https://user-images.githubusercontent.com/487999/79684167-3ecd2f00-826a-11ea-806a-957362d197e3.png)
-
-    - 고객이 상품을 선택하여 주문한다 (ok)
-    - 고객이 결제한다 (ok)
-    - 주문이 되면 주문 내역이 슈즈모아 업체에게 전달된다 (ok)
-    - 슈즈모아 업체가 확인하여 포장해서 배송 출발한다 (ok)
-
-![image](https://user-images.githubusercontent.com/487999/79684170-47256a00-826a-11ea-9777-e16fafff519a.png)
-
-    - 고객이 주문을 취소할 수 있다 (ok)
-    - 주문이 취소되면 배송이 취소된다 (ok)
-    - 고객이 주문상태를 중간중간 조회한다 (View-green sticker 의 추가로 ok) 
-    - 주문상태가 바뀔 때 마다 카톡으로 알림을 보낸다 (?)
-
-
-### 모델 수정
-
-![image](https://user-images.githubusercontent.com/487999/79684176-4e4c7800-826a-11ea-8deb-b7b053e5d7c6.png)
-    
-    - 수정된 모델은 모든 요구사항을 커버함.
-
 ### 비기능 요구사항에 대한 검증
 
-![image](https://user-images.githubusercontent.com/487999/79684184-5c9a9400-826a-11ea-8d87-2ed1e44f4562.png)
+![image](https://user-images.githubusercontent.com/112833706/200234485-09f546a2-f936-4d7f-8e4b-576ad5a06454.png)
 
     - 마이크로 서비스를 넘나드는 시나리오에 대한 트랜잭션 처리
         - 고객 주문시 결제처리:  결제가 완료되지 않은 주문은 받지 않는 다는  정책에 따라, ACID 트랜잭션 적용. 주문 완료시 결제처리에 대해서는 Request-Response 방식 처리
@@ -235,63 +175,109 @@ python policy-handler.py
 - 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 pay 마이크로 서비스). 이때 가능한 현업에서 사용하는 언어 (유비쿼터스 랭귀지)를 그대로 사용하려고 노력했다. 하지만, 일부 구현에 있어서 영문이 아닌 경우는 실행이 불가능한 경우가 있기 때문에 계속 사용할 방법은 아닌것 같다. (Maven pom.xml, Kafka의 topic id, FeignClient 의 서비스 id 등은 한글로 식별자를 사용하는 경우 오류가 발생하는 것을 확인하였다)
 
 ```
-package fooddelivery;
+package shoesdelivery.domain;
 
+import shoesdelivery.domain.PaymentApproved;
+import shoesdelivery.domain.PaymentCancelled;
+import shoesdelivery.PayApplication;
 import javax.persistence.*;
-import org.springframework.beans.BeanUtils;
 import java.util.List;
+import lombok.Data;
+import java.util.Date;
 
 @Entity
-@Table(name="결제이력_table")
-public class 결제이력 {
+@Table(name="PaymentHistory_table")
+@Data
 
+public class PaymentHistory  {
+
+    
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    private String orderId;
-    private Double 금액;
+    //private String orderId;
+    private Long orderId;
+    private String amount;
+    private String status;
 
-    public Long getId() {
+    public Long getId(){
         return id;
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long id){
+        this.id=id;
     }
-    public String getOrderId() {
+
+    /*
+    public String getOrderId(){
         return orderId;
     }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setOrderId(String orderId){
+        this.orderId=orderId;
     }
-    public Double get금액() {
-        return 금액;
+    */
+    public Long getOrderId(){
+        return orderId;
+    }
+    public void setOrderId(Long orderId){
+        this.orderId=orderId;
+    }  
+
+    public String getAmount(){
+        return amount;
+    }
+    public void setAmount(String amount){
+        this.amount=amount;
     }
 
-    public void set금액(Double 금액) {
-        this.금액 = 금액;
+    public String getStatus(){
+        return status;
+    }
+    public void setStatus(String status){
+        this.status=status;
     }
 
+    @PostPersist
+    public void onPostPersist(){
+
+
+        PaymentApproved paymentApproved = new PaymentApproved(this);
+        paymentApproved.publishAfterCommit();
+
+
+
+        PaymentCancelled paymentCancelled = new PaymentCancelled(this);
+        paymentCancelled.publishAfterCommit();
+
+    }
+
+    public static PaymentHistoryRepository repository(){
+        PaymentHistoryRepository paymentHistoryRepository = PayApplication.applicationContext.getBean(PaymentHistoryRepository.class);
+        return paymentHistoryRepository;
+    }
 }
 
 ```
 - Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다
 ```
-package fooddelivery;
+package shoesdelivery.domain;
 
+import shoesdelivery.domain.*;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-public interface 결제이력Repository extends PagingAndSortingRepository<결제이력, Long>{
+@RepositoryRestResource(collectionResourceRel="paymentHistories", path="paymentHistories")
+public interface PaymentHistoryRepository extends PagingAndSortingRepository<PaymentHistory, Long>{
+
 }
+
 ```
 - 적용 후 REST API 의 테스트
 ```
 # app 서비스의 주문처리
-http localhost:8081/orders item="통닭"
+http localhost:8081/orders item="러닝화" colorCode="black" size="270" quantity=1 price=12000
 
 # store 서비스의 배달처리
-http localhost:8083/주문처리s orderId=1
+http localhost:8082/ordermanagements orderId=1
 
 # 주문 상태 확인
 http localhost:8081/orders/1
@@ -299,39 +285,6 @@ http localhost:8081/orders/1
 ```
 
 
-## 폴리글랏 퍼시스턴스
-
-앱프런트 (app) 는 서비스 특성상 많은 사용자의 유입과 상품 정보의 다양한 콘텐츠를 저장해야 하는 특징으로 인해 RDB 보다는 Document DB / NoSQL 계열의 데이터베이스인 Mongo DB 를 사용하기로 하였다. 이를 위해 order 의 선언에는 @Entity 가 아닌 @Document 로 마킹되었으며, 별다른 작업없이 기존의 Entity Pattern 과 Repository Pattern 적용과 데이터베이스 제품의 설정 (application.yml) 만으로 MongoDB 에 부착시켰다
-
-```
-# Order.java
-
-package fooddelivery;
-
-@Document
-public class Order {
-
-    private String id; // mongo db 적용시엔 id 는 고정값으로 key가 자동 발급되는 필드기 때문에 @Id 나 @GeneratedValue 를 주지 않아도 된다.
-    private String item;
-    private Integer 수량;
-
-}
-
-
-# 주문Repository.java
-package fooddelivery;
-
-public interface 주문Repository extends JpaRepository<Order, UUID>{
-}
-
-# application.yml
-
-  data:
-    mongodb:
-      host: mongodb.default.svc.cluster.local
-    database: mongo-example
-
-```
 
 ## 폴리글랏 프로그래밍
 
@@ -358,13 +311,15 @@ for message in consumer:
 
 파이선 애플리케이션을 컴파일하고 실행하기 위한 도커파일은 아래와 같다 (운영단계에서 할일인가? 아니다 여기 까지가 개발자가 할일이다. Immutable Image):
 ```
-FROM python:2.7-slim
+FROM python:3.7.3
+COPY . /app
 WORKDIR /app
-ADD . /app
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
-ENV NAME World
-EXPOSE 8090
-CMD ["python", "policy-handler.py"]
+
+ENV TZ=Asia/Seoul
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN pip3 install --upgrade pip
+RUN pip3 install -r requirements.txt
+CMD ["python3", "app.py", "-m", "Docker"]
 ```
 
 
@@ -375,17 +330,23 @@ CMD ["python", "policy-handler.py"]
 - 결제서비스를 호출하기 위하여 Stub과 (FeignClient) 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 
 
 ```
-# (app) 결제이력Service.java
+# (app) PaymentHistoryService.java
+package shoesdelivery.external;
 
-package fooddelivery.external;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient(name="pay", url="http://localhost:8082")//, fallback = 결제이력ServiceFallback.class)
-public interface 결제이력Service {
+import java.util.Date;
 
-    @RequestMapping(method= RequestMethod.POST, path="/결제이력s")
-    public void 결제(@RequestBody 결제이력 pay);
-
+@FeignClient(name = "pay", url = "${api.url.pay}")
+public interface PaymentHistoryService {
+    @RequestMapping(method= RequestMethod.POST, path="/paymentHistories")
+    public void pay(@RequestBody PaymentHistory paymentHistory);
 }
+
 ```
 
 - 주문을 받은 직후(@PostPersist) 결제를 요청하도록 처리
@@ -394,12 +355,14 @@ public interface 결제이력Service {
 
     @PostPersist
     public void onPostPersist(){
+        shoesdelivery.external.PaymentHistory paymentHistory = new shoesdelivery.external.PaymentHistory();
 
-        fooddelivery.external.결제이력 pay = new fooddelivery.external.결제이력();
-        pay.setOrderId(getOrderId());
-        
-        Application.applicationContext.getBean(fooddelivery.external.결제이력Service.class)
-                .결제(pay);
+        paymentHistory.setOrderId(Long.valueOf(getId()));
+        if(getPrice() != null){
+            paymentHistory.setAmount(Double.valueOf(getPrice()));
+        }
+        // mappings goes here
+        AppApplication.applicationContext.getBean(shoesdelivery.external.PaymentHistoryService.class).pay(paymentHistory);
     }
 ```
 
@@ -410,16 +373,16 @@ public interface 결제이력Service {
 # 결제 (pay) 서비스를 잠시 내려놓음 (ctrl+c)
 
 #주문처리
-http localhost:8081/orders item=통닭 storeId=1   #Fail
-http localhost:8081/orders item=피자 storeId=2   #Fail
+http localhost:8081/orders item="러닝화" colorCode="black" size="270" quantity=1 price=12000   #Fail
+http localhost:8081/orders item="운동화" colorCode="black" size="230" quantity=1 price=15000   #Fail
 
 #결제서비스 재기동
 cd 결제
 mvn spring-boot:run
 
 #주문처리
-http localhost:8081/orders item=통닭 storeId=1   #Success
-http localhost:8081/orders item=피자 storeId=2   #Success
+http localhost:8081/orders item="러닝화" colorCode="black" size="270" quantity=1 price=12000   #Success
+http localhost:8081/orders item="운동화" colorCode="black" size="230" quantity=1 price=15000   #Success
 ```
 
 - 또한 과도한 요청시에 서비스 장애가 도미노 처럼 벌어질 수 있다. (서킷브레이커, 폴백 처리는 운영단계에서 설명한다.)
@@ -435,18 +398,20 @@ http localhost:8081/orders item=피자 storeId=2   #Success
 - 이를 위하여 결제이력에 기록을 남긴 후에 곧바로 결제승인이 되었다는 도메인 이벤트를 카프카로 송출한다(Publish)
  
 ```
-package fooddelivery;
+package shoesdelivery;
 
 @Entity
-@Table(name="결제이력_table")
-public class 결제이력 {
+@Table(name="PaymentHistory_table")
+@Data
+public class PaymentHistory  {
 
  ...
-    @PrePersist
-    public void onPrePersist(){
-        결제승인됨 결제승인됨 = new 결제승인됨();
-        BeanUtils.copyProperties(this, 결제승인됨);
-        결제승인됨.publish();
+    @PostPersist
+    public void onPostPersist(){
+        PaymentApproved paymentApproved = new PaymentApproved(this);
+        paymentApproved.publishAfterCommit();
+        PaymentCancelled paymentCancelled = new PaymentCancelled(this);
+        paymentCancelled.publishAfterCommit();
     }
 
 }
@@ -454,7 +419,7 @@ public class 결제이력 {
 - 상점 서비스에서는 결제승인 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다:
 
 ```
-package fooddelivery;
+package shoesdelivery;
 
 ...
 
@@ -462,13 +427,21 @@ package fooddelivery;
 public class PolicyHandler{
 
     @StreamListener(KafkaProcessor.INPUT)
-    public void whenever결제승인됨_주문정보받음(@Payload 결제승인됨 결제승인됨){
+    public void whatever(@Payload String eventString){}
 
-        if(결제승인됨.isMe()){
-            System.out.println("##### listener 주문정보받음 : " + 결제승인됨.toJson());
-            // 주문 정보를 받았으니, 요리를 슬슬 시작해야지..
-            
+    @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='PaymentApproved'")
+    public void wheneverPaymentApproved_ReceiveOrderinformation(@Payload PaymentApproved paymentApproved){
+
+        if(paymentApproved.isMe()){
+            PaymentApproved event = paymentApproved;
+            System.out.println("\n\n##### listener ReceiveOrderinformation : " + paymentApproved + "\n\n");
+
+            Ordermanagement ordermanagement = new Ordermanagement();
+            ordermanagement.setOrderId(Long.valueOf(paymentApproved.getOrderId()));
+            ordermanagementRepository.save(ordermanagement);
         }
+        
+
     }
 
 }
@@ -477,20 +450,23 @@ public class PolicyHandler{
 실제 구현을 하자면, 카톡 등으로 슈즈모아 업체는 노티를 받고, 포장를 마친후, 주문 상태를 UI에 입력할테니, 우선 주문정보를 DB에 받아놓은 후, 이후 처리는 해당 Aggregate 내에서 하면 되겠다.:
   
 ```
-  @Autowired 주문관리Repository 주문관리Repository;
+  @Autowired OrdermanagementRepository ordermanagementRepository;
   
-  @StreamListener(KafkaProcessor.INPUT)
-  public void whenever결제승인됨_주문정보받음(@Payload 결제승인됨 결제승인됨){
+  @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='PaymentApproved'")
+  public void wheneverPaymentApproved_ReceiveOrderinformation(@Payload PaymentApproved paymentApproved){
 
-      if(결제승인됨.isMe()){
-          카톡전송(" 주문이 왔어요! : " + 결제승인됨.toString(), 주문.getStoreId());
+      if(paymentApproved.isMe()){
 
-          주문관리 주문 = new 주문관리();
-          주문.setId(결제승인됨.getOrderId());
-          주문관리Repository.save(주문);
+          PaymentApproved event = paymentApproved;
+          System.out.println("\n\n##### listener ReceiveOrderinformation : " + paymentApproved + "\n\n");
+
+          Ordermanagement ordermanagement = new Ordermanagement();
+          ordermanagement.setOrderId(Long.valueOf(paymentApproved.getOrderId()));
+          ordermanagementRepository.save(ordermanagement);
+          // Sample Logic //
+          //Ordermanagement.receiveOrderinformation(event);          
       }
   }
-
 ```
 
 슈즈모아 관리시스템은 주문/결제와 완전히 분리되어있으며, 이벤트 수신에 따라 처리되기 때문에, 슈즈모아 관리시스템이 유지보수로 인해 잠시 내려간 상태라도 주문을 받는데 문제가 없다:
@@ -498,8 +474,8 @@ public class PolicyHandler{
 # 상점 서비스 (store) 를 잠시 내려놓음 (ctrl+c)
 
 #주문처리
-http localhost:8081/orders item=통닭 storeId=1   #Success
-http localhost:8081/orders item=피자 storeId=2   #Success
+http localhost:8081/orders item="러닝화" colorCode="black" size="270" quantity=1 price=12000   #Success
+http localhost:8081/orders item="운동화" colorCode="black" size="230" quantity=1 price=15000   #Success
 
 #주문상태 확인
 http localhost:8080/orders     # 주문상태 안바뀜 확인
