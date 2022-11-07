@@ -411,12 +411,32 @@ package shoesdelivery;
 public class PaymentHistory  {
 
  ...
-    @PostPersist
-    public void onPostPersist(){
-        PaymentApproved paymentApproved = new PaymentApproved(this);
-        paymentApproved.publishAfterCommit();
-        PaymentCancelled paymentCancelled = new PaymentCancelled(this);
-        paymentCancelled.publishAfterCommit();
+    @PrePersist
+    public void onPrePersist(){
+        PaymentApproved paymentApproved = new PaymentApproved();
+        BeanUtils.copyProperties(this, paymentApproved);
+        paymentApproved.publish();
+    }
+    */
+
+    @PrePersist
+    public void onPrePersist(){
+
+        if("취소".equals(this.status)){
+            PaymentCancelled paymentCancelled = new PaymentCancelled();
+            BeanUtils.copyProperties(this, paymentCancelled);
+            paymentCancelled.publish();
+        }else{
+            PaymentApproved paymentApproved = new PaymentApproved();
+            BeanUtils.copyProperties(this, paymentApproved);
+
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+                @Override
+                public void beforeCommit(boolean readOnly) {
+                    paymentApproved.publish();
+                }
+            });
+        }
     }
 
 }
