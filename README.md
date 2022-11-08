@@ -638,7 +638,8 @@ CB 설정 제거
 
 Autoscaler 설정 제거
 
-![화면 캡처 2022-11-08 103900](https://user-images.githubusercontent.com/113114425/200453369-6aed8295-361e-4254-9278-aa1c4c5cdaeb.png)
+![화면 캡처 2022-11-08 104355](https://user-images.githubusercontent.com/113114425/200455953-32ffb2a7-b57d-4136-9383-6c586c5cbe06.png)
+
 
 
 - seige 로 배포작업 직전에 워크로드를 모니터링 함.
@@ -669,7 +670,7 @@ kubectl set image ...
 
 배포기간중 Availability 가 평소 100%에서 20% 미만으로 떨어지는 것을 확인. 원인은 쿠버네티스가 성급하게 새로 올려진 서비스를 READY 상태로 인식하여 서비스 유입을 진행한 것이기 때문. 이를 막기위해 Readiness Probe 를 설정함:
 
-![화면 캡처 2022-11-08 105116](https://user-images.githubusercontent.com/113114425/200454358-23ce5095-bf3d-495e-93be-69ca1d89ca1a.png)
+![화면 캡처 2022-11-08 101826](https://user-images.githubusercontent.com/113114425/200456156-94e57d3e-ef33-4246-9d04-b8747c3d3559.png)
 
 ![화면 캡처 2022-11-08 103900](https://user-images.githubusercontent.com/113114425/200454294-345cee19-2be2-4690-8cb6-20f22741fa7b.png)
 
