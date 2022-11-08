@@ -5,7 +5,9 @@
 
 # 슈즈모아
 
- <슈즈모아 소개가 들어갈 자리!!>
+ 본 과제는 MSA/DDD/Event Storming/EDA 를 포괄하는 분석/설계/구현/운영 전단계를 커버하도록 구성한 실습과제 입니다. 
+ 이는 클라우드 네이티브 애플리케이션의 개발에 요구되는 체크포인트들을 고려하여 예시 답안을 작성 했습니다.
+
 
 [DDD]
   https://labs.msaez.io/#/storming/s1fjCA5xjJOde8YQKGyloSvE8bW2/58cba37def25dca06817edf14257531f
