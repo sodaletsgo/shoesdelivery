@@ -732,6 +732,7 @@ server:
   port: 8080
 
 ```
+![화면 캡처 2022-11-08 112703](https://user-images.githubusercontent.com/113114425/200460119-b6037f3b-a025-4900-ab1e-1e3a976518bf.png)
 
 
 ## Self-healing (Liveness Probe)
