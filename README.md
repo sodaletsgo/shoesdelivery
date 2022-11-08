@@ -749,9 +749,13 @@ livenessProbe에 'cat /tmp/healthy'으로 검증하도록 함
 컨테이너 실행 후 90초 동인은 정상이나 이후 /tmp/healthy 파일이 삭제되어 livenessProbe에서 실패를 리턴하게 됨
 pod 정상 상태 일때 pod 진입하여 /tmp/healthy 파일 생성해주면 정상 상태 유지됨
 ```
+livenessProbe 실패 리턴
 ![화면 캡처 2022-11-08 113637](https://user-images.githubusercontent.com/113114425/200462896-2801f6b8-652d-46cd-badd-23204024039c.png)
 ![화면 캡처 2022-11-08 113714](https://user-images.githubusercontent.com/113114425/200462913-08e78639-165b-4a18-a6de-abf96cdf3ccd.png)
 
+정상 상태 유지
+![화면 캡처 2022-11-08 115612](https://user-images.githubusercontent.com/113114425/200464106-e366dd22-f2e1-4ca7-af1d-57841a87566e.png)
+![화면 캡처 2022-11-08 115335](https://user-images.githubusercontent.com/113114425/200463901-91621525-ffb0-41ea-8af1-6aa3168aeb68.png)
 
 ## Config Map/ Persistence Volume
 - 채워넣을 곳
