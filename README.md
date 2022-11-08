@@ -29,6 +29,10 @@
     - [동기식 호출 / 서킷 브레이킹 / 장애격리](#동기식-호출-서킷-브레이킹-장애격리)
     - [오토스케일 아웃](#오토스케일-아웃)
     - [무정지 재배포](#무정지-재배포)
+  - [추가: 구현, 운영]
+    - API Gateway
+    - Self-healing (Liveness Probe)
+    - Config Map/ Persistence Volume
 
 
 # 서비스 시나리오
@@ -681,3 +685,55 @@ kubectl set image ...
 
 배포기간 동안 Availability 가 변화없기 때문에 무정지 재배포가 성공한 것으로 확인됨.
 
+
+## API Gateway
+- API GW를 통하여 마이크로 서비스들의 집입점을 통일할 수 있는가?
+  -> gateway pod을 적용하여 진입 단일점 생성
+```
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: app
+          uri: http://app:8080
+          predicates:
+            - Path=/orders/**, /shoppingLists/**, /registerOrders/**
+        - id: store
+          uri: http://store:8080
+          predicates:
+            - Path=/ordermanagements/**, /viewOrderDetails/**
+        - id: pay
+          uri: http://pay:8080
+          predicates:
+            - Path=/paymentHistories/**, 
+        - id: customer
+          uri: http://customer:8080
+          predicates:
+            - Path=, 
+        - id: frontend
+          uri: http://frontend:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
+
+```
+
+
+## Self-healing (Liveness Probe)
+- 채워넣을 곳
+
+## Config Map/ Persistence Volume
+- 채워넣을 곳
