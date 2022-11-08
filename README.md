@@ -759,23 +759,29 @@ livenessProbe 실패 리턴
 
 ## Persistence Volume
 1. AWS에서 EFS 생성
+
 ![image](https://user-images.githubusercontent.com/112998779/200481023-25244251-db3f-4f0d-a132-b2db39157808.png)
 
 2. EFS 계정 생성 및 ROLE 바인딩
+
 ![image](https://user-images.githubusercontent.com/112998779/200481256-eec82b47-c4a5-44a9-a6e3-0458567285eb.png)
 
 kubectl apply -f https://raw.githubusercontent.com/event-storming/container-orchestration/master/yaml/volume/aws/efs-rbac.yaml
 
 3. EFS Provisioner 배포
+
 ![image](https://user-images.githubusercontent.com/112998779/200481600-87a147e9-48c3-4dce-99b0-3ab85a75d709.png)
 
 4. 설치한 Provisioner를 storageclass에 등록
+
 ![image](https://user-images.githubusercontent.com/112998779/200481699-797505fe-6610-4e77-a6cd-a38fdf83ad7e.png)
 
 5. PVC(PersistentVolumeClaim) 생성
+
 ![image](https://user-images.githubusercontent.com/112998779/200481805-9192fc68-eb05-4760-978b-a7f7ba533f45.png)
 
 6. PVC 생성 확인 및 Mount 경로 확인
+
 ![image](https://user-images.githubusercontent.com/112998779/200482502-c85840a4-1ad8-4fdd-80b3-a87f2757dac9.png)
 
 
