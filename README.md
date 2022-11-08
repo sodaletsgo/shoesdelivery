@@ -527,7 +527,7 @@ hystrix:
   command:
     # 전역설정
     default:
-      execution.isolation.thread.timeoutInMilliseconds: 480
+      execution.isolation.thread.timeoutInMilliseconds: 600
 
 ```
 
@@ -549,8 +549,8 @@ hystrix:
 ```
 
 * 부하테스터 siege 툴을 통한 서킷 브레이커 동작 확인:
-- 동시사용자 100명
-- 60초 동안 실시
+- 동시사용자 10명
+- 20초 동안 실시
 
 ```
 root@3430fcf0db51:/# siege -c10 -t20S -r10 -v --content-type "application/json" 'http://172.18.0.1:8081/orders POST {"item":"운동화"}'
