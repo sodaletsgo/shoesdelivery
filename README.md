@@ -504,12 +504,6 @@ http localhost:8080/orders     # 모든 주문의 상태가 "배송됨"으로 �
 
 # 운영
 
-## CI/CD 설정
-
-
-각 구현체들은 각자의 source repository 에 구성되었고, 사용한 CI/CD 플랫폼은 GCP를 사용하였으며, pipeline build script 는 각 프로젝트 폴더 이하에 cloudbuild.yml 에 포함되었다.
-
-
 ## 동기식 호출 / 서킷 브레이킹 / 장애격리
 
 * 서킷 브레이킹 프레임워크의 선택: Spring FeignClient + Hystrix 옵션을 사용하여 구현함
@@ -615,29 +609,38 @@ siege -c100 -t120S -r10 -v --content-type "application/json" 'http://localhost:8
 kubectl get deploy pay -w
 ```
 - 어느정도 시간이 흐른 후 (약 30초) 스케일 아웃이 벌어지는 것을 확인할 수 있다:
-```
-NAME    DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-pay     1         1         1            1           17s
-pay     1         2         1            1           45s
-pay     1         4         1            1           1m
-:
-```
+![화면 캡처 2022-11-08 100756](https://user-images.githubusercontent.com/113114425/200453057-05fe399f-3a20-4006-ae42-e193dfd232b4.png)
+
 - siege 의 로그를 보아도 전체적인 성공률이 높아진 것을 확인 할 수 있다. 
 ```
-Transactions:		        5078 hits
-Availability:		       92.45 %
-Elapsed time:		       120 secs
-Data transferred:	        0.34 MB
-Response time:		        5.60 secs
-Transaction rate:	       17.15 trans/sec
-Throughput:		        0.01 MB/sec
-Concurrency:		       96.02
-```
+Lifting the server siege...
+Transactions:                    1081 hits
+Availability:                  95.83 %
+Elapsed time:                  119.61 secs
+Data transferred:               0.44 MB
+Response time:                  9.52 secs
+Transaction rate:              9.07 trans/sec
+Throughput:                     0.00 MB/sec
+Concurrency:                    86.39
+Successful transactions:         1081
+Failed transactions:              47
+Longest transaction:            61.07
+Shortest transaction:           0.55
 
+```
 
 ## 무정지 재배포
 
 * 먼저 무정지 재배포가 100% 되는 것인지 확인하기 위해서 Autoscaler 이나 CB 설정을 제거함
+
+CB 설정 제거
+
+![화면 캡처 2022-11-08 101800](https://user-images.githubusercontent.com/113114425/200453279-a985e94f-d1cc-4d45-bcc1-024e94fe8658.png)
+
+Autoscaler 설정 제거
+
+![화면 캡처 2022-11-08 103900](https://user-images.githubusercontent.com/113114425/200453369-6aed8295-361e-4254-9278-aa1c4c5cdaeb.png)
+
 
 - seige 로 배포작업 직전에 워크로드를 모니터링 함.
 ```
@@ -661,38 +664,20 @@ kubectl set image ...
 ```
 
 - seige 의 화면으로 넘어가서 Availability 가 100% 미만으로 떨어졌는지 확인
-```
-Transactions:		        3078 hits
-Availability:		       70.45 %
-Elapsed time:		       120 secs
-Data transferred:	        0.34 MB
-Response time:		        5.60 secs
-Transaction rate:	       17.15 trans/sec
-Throughput:		        0.01 MB/sec
-Concurrency:		       96.02
 
-```
-배포기간중 Availability 가 평소 100%에서 70% 대로 떨어지는 것을 확인. 원인은 쿠버네티스가 성급하게 새로 올려진 서비스를 READY 상태로 인식하여 서비스 유입을 진행한 것이기 때문. 이를 막기위해 Readiness Probe 를 설정함:
-
-```
-# deployment.yaml 의 readiness probe 의 설정:
+![화면 캡처 2022-11-08 102921](https://user-images.githubusercontent.com/113114425/200454111-05f03373-9c69-4904-999f-f07a62f262bd.png)
 
 
-kubectl apply -f kubernetes/deployment.yaml
-```
+배포기간중 Availability 가 평소 100%에서 20% 미만으로 떨어지는 것을 확인. 원인은 쿠버네티스가 성급하게 새로 올려진 서비스를 READY 상태로 인식하여 서비스 유입을 진행한 것이기 때문. 이를 막기위해 Readiness Probe 를 설정함:
+
+![화면 캡처 2022-11-08 105116](https://user-images.githubusercontent.com/113114425/200454358-23ce5095-bf3d-495e-93be-69ca1d89ca1a.png)
+
+![화면 캡처 2022-11-08 103900](https://user-images.githubusercontent.com/113114425/200454294-345cee19-2be2-4690-8cb6-20f22741fa7b.png)
 
 - 동일한 시나리오로 재배포 한 후 Availability 확인:
-```
-Transactions:		        3078 hits
-Availability:		       100 %
-Elapsed time:		       120 secs
-Data transferred:	        0.34 MB
-Response time:		        5.60 secs
-Transaction rate:	       17.15 trans/sec
-Throughput:		        0.01 MB/sec
-Concurrency:		       96.02
 
-```
+![화면 캡처 2022-11-08 103830](https://user-images.githubusercontent.com/113114425/200454171-d3617c1e-d003-4132-be4f-10df3b2b1e9b.png)
+
 
 배포기간 동안 Availability 가 변화없기 때문에 무정지 재배포가 성공한 것으로 확인됨.
 
