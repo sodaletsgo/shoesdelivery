@@ -688,7 +688,9 @@ kubectl set image ...
 
 ## API Gateway
 - API GW를 통하여 마이크로 서비스들의 집입점을 통일할 수 있는가?
+
   -> gateway pod을 적용하여 진입 단일점 생성
+  
 ```
 spring:
   profiles: docker
