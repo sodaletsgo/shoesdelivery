@@ -29,7 +29,7 @@
     - [동기식 호출 / 서킷 브레이킹 / 장애격리](#동기식-호출-서킷-브레이킹-장애격리)
     - [오토스케일 아웃](#오토스케일-아웃)
     - [무정지 재배포](#무정지-재배포)
-  - 추가: 구현, 운영
+  - [추가](#추가-)
     - API Gateway
     - Self-healing (Liveness Probe)
     - Config Map/ Persistence Volume
@@ -685,6 +685,7 @@ kubectl set image ...
 
 배포기간 동안 Availability 가 변화없기 때문에 무정지 재배포가 성공한 것으로 확인됨.
 
+# 추가
 
 ## API Gateway
 - API GW를 통하여 마이크로 서비스들의 집입점을 통일할 수 있는가?
