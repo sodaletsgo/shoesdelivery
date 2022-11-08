@@ -737,7 +737,21 @@ server:
 
 
 ## Self-healing (Liveness Probe)
-- 채워넣을 곳
+- app deployment.yml 파일 수정
+```
+콘테이너 실행 후 /tmp/healthy 파일을 만들고 90초 후 삭제
+livenessProbe에 'cat /tmp/healthy'으로 검증하도록 함
+```
+![화면 캡처 2022-11-08 113536](https://user-images.githubusercontent.com/113114425/200462793-2adfa5ae-317c-4854-96f4-c53e33d15050.png)
+
+- kubectl describe pod app 실행으로 확인
+```
+컨테이너 실행 후 90초 동인은 정상이나 이후 /tmp/healthy 파일이 삭제되어 livenessProbe에서 실패를 리턴하게 됨
+pod 정상 상태 일때 pod 진입하여 /tmp/healthy 파일 생성해주면 정상 상태 유지됨
+```
+![화면 캡처 2022-11-08 113637](https://user-images.githubusercontent.com/113114425/200462896-2801f6b8-652d-46cd-badd-23204024039c.png)
+![화면 캡처 2022-11-08 113714](https://user-images.githubusercontent.com/113114425/200462913-08e78639-165b-4a18-a6de-abf96cdf3ccd.png)
+
 
 ## Config Map/ Persistence Volume
 - 채워넣을 곳
