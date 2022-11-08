@@ -29,7 +29,7 @@
     - [동기식 호출 / 서킷 브레이킹 / 장애격리](#동기식-호출-서킷-브레이킹-장애격리)
     - [오토스케일 아웃](#오토스케일-아웃)
     - [무정지 재배포](#무정지-재배포)
-  - [추가: 구현, 운영]
+  - 추가: 구현, 운영
     - API Gateway
     - Self-healing (Liveness Probe)
     - Config Map/ Persistence Volume
